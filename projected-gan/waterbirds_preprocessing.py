@@ -172,11 +172,11 @@ def step4_run_dataset_tool(dataset_tool_path):
         src     = os.path.join(IMAGES_DIR, f"waterbirds_{rho_tag}")
         dest    = os.path.join(GAN_DIR,    f"waterbirds_256_{rho_tag}")
         cmd = [
-            sys.executable, dataset_tool_path,
+            sys.executable,
+            dataset_tool_path,
             f"--source={src}",
             f"--dest={dest}",
-            "--width=256",
-            "--height=256"
+            "--resolution=256x256",
         ]
         print(f"  {' '.join(cmd)}")
         subprocess.run(cmd, check=True)
