@@ -1,0 +1,10 @@
+*.pt
+*.pth
+*.png
+*.zip
+*.pyc
+*__pycache__*
+
+stylegan3/data/*
+projected-gan/data/*
+Diffusion-GAN/*/data/*

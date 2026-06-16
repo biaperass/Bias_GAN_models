@@ -1,0 +1,25 @@
+name: biased_generation_cu12+
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - numpy<1.25
+  - click>=8.0
+  - pillow>=9.0
+  - scipy>=1.9
+  - pytorch=2.1.0
+  - torchvision
+  - pytorch-cuda=12.1
+  - requests
+  - psutil
+  - tqdm
+  - ninja
+  - matplotlib
+  - imageio
+  - setuptools<70
+  - pip:
+      - imageio-ffmpeg==0.4.9
+      - pyspng
