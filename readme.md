@@ -1,6 +1,6 @@
 # Waterbirds Preprocessing & Training Pipeline
 
-This pipeline reproduces the Waterbirds bias-amplification experiments across multiple values of ρ (training set bias). Run the two scripts in order from the root of this repo.
+This pipeline reproduces the Waterbirds bias-amplification experiments across multiple values of $\rho$ (training set bias). Run the two scripts in order from the root of this repo.
 
 ## Step 1: Preprocessing
 
@@ -24,8 +24,15 @@ python waterbirds_preprocessing.py --skip_step 0 1
 
 ## Step 2: Training
 
+Training is executed one $\rho$ value at a time using a shell wrapper. Each run trains the model on a single dataset corresponding to one bias level.
+
 ```bash
-python train_waterbirds.py 
+./train.sh <rho_tag>
+```
+
+e.g.:
+```bash
+./train.sh 95
 ```
 
 **By default this runs in dry-run mode** (`--dry-run=1`), meaning no actual training occurs — it validates the command and data path without launching a real run. To launch real training, pass `--dry-run 0`:
@@ -34,9 +41,19 @@ python train_waterbirds.py
 python train_waterbirds.py --dry-run 0
 ```
 
-This trains StyleGAN2 once per $\rho$ value, reading from the folders produced in Step 1 (`data/waterbirds_rho_gan/waterbirds_256_{rho}/`) and writing checkpoints to `output_waterbirds_{rho}/` in the repo root.
+**Dataset requirements**
 
-Default hyperparameters (override via flags):
+The script expects preprocessing outputs from Step 1:
+```bash
+data/waterbirds_rho_gan/waterbirds_256_{rho_tag}
+```
+
+If the folder does not exist, run preprocessing first:
+```bash
+python waterbirds_preprocessing.py
+```
+
+**Default hyperparameters** (override via flags):
 
 | Flag | Default | Meaning |
 |---|---|---|
@@ -48,11 +65,15 @@ Default hyperparameters (override via flags):
 | `--mirror` | 1 | horizontal flip augmentation |
 | `--aug` | ada | adaptive discriminator augmentation |
 
-Example overriding batch size and training length:
+**Optional overrides** 
 
+Additional arguments are forwarded directly to the underlying training script, allowing hyperparameter overrides without modifying the script.
+
+e.g.:
 ```bash
-python train_waterbirds.py --batch=64 --kimg=5000
+./train.sh 95 --batch=64 --kimg=5000 --dry-run=0
 ```
+This overrides: batch size, training length, dry-run mode (set to real training)
 
 ## Output Layout
 
