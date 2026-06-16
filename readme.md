@@ -11,7 +11,7 @@ python waterbirds_preprocessing.py
 This single script runs the full preprocessing pipeline:
 
 1. **Download** — fetches and extracts the Waterbirds dataset if not already present
-2. **Generate per-ρ metadata CSVs** — creates resampled training splits at ρ = 0.70, 0.80, 0.95 (edit `RHO_VALUES` at the top of the script to change this)
+2. **Generate per-$\rho$ metadata CSVs** — creates resampled training splits at $\rho$ = 0.70, 0.80, 0.95 
 3. **Copy images** — copies the relevant images into `data/waterbirds_rho_images/waterbirds_{rho}/`
 4. **Write dataset.json** — generates label files required by `dataset_tool.py`
 5. **Run dataset_tool.py** — converts each image folder into the `.zip`/folder format StyleGAN2 expects, output to `data/waterbirds_rho_gan/waterbirds_256_{rho}/`
@@ -27,12 +27,12 @@ python waterbirds_preprocessing.py --skip_step 0 1
 Training is executed one $\rho$ value at a time using a shell wrapper. Each run trains the model on a single dataset corresponding to one bias level.
 
 ```bash
-./train.sh <rho_tag>
+bash train.sh <rho_tag>
 ```
 
 e.g.:
 ```bash
-./train.sh 95
+bash train.sh 95
 ```
 
 **By default this runs in dry-run mode** (`--dry-run=1`), meaning no actual training occurs — it validates the command and data path without launching a real run. To launch real training, pass `--dry-run 0`:
@@ -59,7 +59,6 @@ python waterbirds_preprocessing.py
 |---|---|---|
 | `--gpus` | 1 | number of GPUs |
 | `--batch` | 32 | batch size |
-| `--gamma` | 8 | R1 regularization weight |
 | `--kimg` | 3500 | training length (thousands of images) |
 | `--cond` | 1 | class-conditional training |
 | `--mirror` | 1 | horizontal flip augmentation |
@@ -71,9 +70,9 @@ Additional arguments are forwarded directly to the underlying training script, a
 
 e.g.:
 ```bash
-./train.sh 95 --batch=64 --kimg=5000 --dry-run=0
+bash train.sh 95 --gpu=2 --batch=64 --kimg=5000
 ```
-This overrides: batch size, training length, dry-run mode (set to real training)
+This overrides: number of gpus, batch size, training length
 
 ## Output Layout
 
