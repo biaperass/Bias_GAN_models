@@ -32,10 +32,8 @@ python "$TRAIN_SCRIPT_PATH" \
     --data="$DATA_PATH" \
     --gpus=1 \
     --batch=32 \
-    --gamma=8 \
     --cond=1 \
     --kimg=3500 \
     --mirror=1 \
-    --aug=ada \
-    --dry-run=1 \
+    --dry-run \
     "$@"
