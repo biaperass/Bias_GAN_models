@@ -1,0 +1,25 @@
+name: stylegan3
+channels:
+  - pytorch
+  - nvidia
+dependencies:
+  - python
+  - pip
+  - numpy
+  - click
+  - pillow
+  - scipy
+  - pytorch
+  - torchvision
+  - cudatoolkit
+  - requests
+  - tqdm
+  - ninja
+  - matplotlib
+  - imageio
+  - pip:
+    - imgui
+    - glfw
+    - pyopengl
+    - imageio-ffmpeg
+    - pyspng
