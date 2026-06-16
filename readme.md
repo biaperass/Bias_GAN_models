@@ -62,7 +62,6 @@ python waterbirds_preprocessing.py
 | `--kimg` | 3500 | training length (thousands of images) |
 | `--cond` | 1 | class-conditional training |
 | `--mirror` | 1 | horizontal flip augmentation |
-| `--aug` | ada | adaptive discriminator augmentation |
 
 **Optional overrides** 
 
