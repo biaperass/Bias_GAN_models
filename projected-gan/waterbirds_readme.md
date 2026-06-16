@@ -27,19 +27,15 @@ python waterbirds_preprocessing.py --skip_step 0 1
 Training is executed one $\rho$ value at a time using a shell wrapper. Each run trains the model on a single dataset corresponding to one bias level.
 
 ```bash
-bash train.sh <rho_tag>
+bash waterbirds_train.sh <rho_tag>
 ```
 
 e.g.:
 ```bash
-bash train.sh 95
+bash waterbirds_train.sh 95
 ```
 
-**By default this runs in dry-run mode** (`--dry-run=1`), meaning no actual training occurs — it validates the command and data path without launching a real run. To launch real training, pass `--dry-run 0`:
-
-```bash
-python train_waterbirds.py --dry-run 0
-```
+**By default this runs in dry-run mode** (`--dry-run`), meaning no actual training occurs, it validates the command and data path without launching a real run. 
 
 **Dataset requirements**
 
