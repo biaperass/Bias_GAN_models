@@ -2,6 +2,15 @@
 
 This pipeline reproduces the Waterbirds bias-amplification experiments across multiple values of $\rho$ (training set bias). Run the two scripts in order from the root of this repo.
 
+## Prerequisites
+
+Before running the preprocessing or training pipeline, create and activate a Conda environment using one of the environment files provided in the repository root:
+
+* `environment_cu12.yml` for systems with CUDA 12
+* `environment_cu11.yml` for systems with CUDA 11
+
+Choose the environment file that matches the CUDA version available on your machine or server.
+
 ## Step 1: Preprocessing
 
 ```bash
@@ -35,7 +44,9 @@ e.g.:
 bash waterbirds_train.sh 95
 ```
 
-**By default this runs in dry-run mode** (`--dry-run`), meaning no actual training occurs, it validates the command and data path without launching a real run. 
+By default, the training script launches a real training run using the specified dataset and hyperparameters.
+
+If you want to validate the configuration, verify the dataset path, and inspect the generated command without starting training, add the `--dry-run` flag when invoking the training script or enable it in `waterbirds_train.sh`.
 
 **Dataset requirements**
 
