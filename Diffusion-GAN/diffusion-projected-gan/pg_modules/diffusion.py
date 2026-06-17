@@ -117,7 +117,7 @@ class Diffusion(torch.nn.Module):
         self.set_diffusion_process(t, "linear")
 
         # sampling t
-        self.t_epl = np.zeros(64, dtype=np.int)
+        self.t_epl = np.zeros(64, dtype=int)
         diffusion_ind = min(round(self.p * 64), 48)  # 48
         prob_t = np.arange(t) / np.arange(t).sum()
         t_diffusion = np.random.choice(np.arange(1, t+1), size=diffusion_ind, p=prob_t)

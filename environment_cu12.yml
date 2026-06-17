@@ -23,3 +23,4 @@ dependencies:
   - pip:
       - imageio-ffmpeg==0.4.9
       - pyspng
+      - timm==0.5.4

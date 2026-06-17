@@ -23,7 +23,7 @@ This single script runs the full preprocessing pipeline:
 2. **Generate per-$\rho$ metadata CSVs** — creates resampled training splits at $\rho$ = 0.70, 0.80, 0.95 
 3. **Copy images** — copies the relevant images into `data/waterbirds_rho_images/waterbirds_{rho}/`
 4. **Write dataset.json** — generates label files required by `dataset_tool.py`
-5. **Run dataset_tool.py** — converts each image folder into the `.zip`/folder format StyleGAN2 expects, output to `data/waterbirds_rho_gan/waterbirds_256_{rho}/`
+5. **Run dataset_tool.py** — converts each image folder into the `.zip`/folder format Diffusion-Projected-GAN expects, output to `data/waterbirds_rho_gan/waterbirds_256_{rho}/`
 
 Each step is idempotent: if its output already exists, it's skipped on rerun. To force a step to rerun, delete its output first or use `--skip_step` to skip steps you don't want to repeat:
 
@@ -88,7 +88,7 @@ data/
 ├── waterbirds_rho/                   # held-out test split metadata
 ├── waterbirds_rho_csv/               # per-rho metadata CSVs
 ├── waterbirds_rho_images/            # per-rho copied images + dataset.json
-└── waterbirds_rho_gan/               # StyleGAN2-formatted datasets (output of dataset_tool.py)
+└── waterbirds_rho_gan/               # Diffusion-Projected-GAN formatted datasets (output of dataset_tool.py)
 
 output_waterbirds_{rho}/                    # training checkpoints and logs, one folder per rho
 ```
