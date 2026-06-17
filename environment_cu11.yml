@@ -1,4 +1,4 @@
-name: bias_generation
+name: bias_generation_cu11+
 channels:
   - defaults
 dependencies:

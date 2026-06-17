@@ -37,5 +37,4 @@ python "$TRAIN_SCRIPT_PATH" \
     --kimg=3500 \
     --mirror=1 \
     --aug=ada \
-    --dry-run \
     "$@"
