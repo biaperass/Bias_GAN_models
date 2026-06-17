@@ -2,6 +2,15 @@
 
 This pipeline reproduces the BiasedMNIST bias-amplification experiments across multiple values of $\rho$ (label–bias correlation). Run the two scripts in order from the root of this repository.
 
+## Prerequisites
+
+Before running the preprocessing or training pipeline, create and activate a Conda environment using one of the environment files provided in the repository root:
+
+* `environment_cu12.yml` for systems with CUDA 12
+* `environment_cu11.yml` for systems with CUDA 11
+
+Choose the environment file that matches the CUDA version available on your machine or server.
+
 ## Step 1: Preprocessing
 
 ```bash
@@ -13,7 +22,7 @@ This script runs the full preprocessing pipeline:
 1. **Generate BiasedMNIST datasets** — creates BiasedMNIST datasets with $\rho$ = 0.70, 0.80, 0.95
 2. **Export images and metadata** — saves all generated images and writes a metadata CSV for each $\rho$
 3. **Write dataset.json** — generates the label files required by `dataset_tool.py`
-4. **Run dataset_tool.py** — converts each image folder into the format expected by StyleGAN2, output to `data/biasedmnist_gan/biasedmnist_{rho}/`
+4. **Run dataset_tool.py** — converts each image folder into the format expected by the model, output to `data/biasedmnist_gan/biasedmnist_{rho}/`
 
 The generated metadata CSV contains:
 
@@ -29,51 +38,24 @@ where:
 * `bias` is the background colour class
 * `rho` is the target bias level used to generate the dataset
 
-To skip the GAN dataset conversion step:
-
-```bash
-python biasedmnist_preprocessing.py --skip_gan
-```
-
-## Verifying the Bias Level
-
-The effective bias level can be verified directly from the generated CSV:
-
-```python
-import pandas as pd
-
-df = pd.read_csv("biasedmnist_0.70.csv")
-
-empirical_rho = (df["y"] == df["bias"]).mean()
-
-print(f"Empirical rho: {empirical_rho:.4f}")
-```
-
-Since aligned samples satisfy:
-
-```text
-y == bias
-```
-
-the empirical rho should be close to the requested value (0.70, 0.80, or 0.95).
 
 ## Step 2: Training
 
 Training is executed one $\rho$ value at a time using a shell wrapper. Each run trains a StyleGAN2 model on a single dataset corresponding to one bias level.
 
 ```bash
-bash train.sh <rho_tag>
+bash biasedmnist_train.sh <rho_tag>
 ```
 
 For example:
 
 ```bash
-bash train.sh 95
+bash biasedmnist_train.sh 95
 ```
 
-By default this runs in dry-run mode (`--dry-run`), meaning no actual training occurs. The command is validated and the dataset path is checked without launching a real training run.
+By default, the training script launches a real training run using the specified dataset and hyperparameters.
 
-To launch a real training run, remove the `--dry-run` flag from `train.sh` or pass the corresponding option supported by your training script.
+If you want to validate the configuration, verify the dataset path, and inspect the generated command without starting training, add the `--dry-run` flag when invoking the training script or enable it in `biasedmnist_train.sh`.
 
 ## Dataset Requirements
 
