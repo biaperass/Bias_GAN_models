@@ -13,8 +13,8 @@ shift
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TRAIN_SCRIPT_PATH="${SCRIPT_DIR}/train.py"
-DATA_PATH="${SCRIPT_DIR}/data/biasedmnist_gan/biasedmnist_${RHO_TAG}"
-OUTDIR="${SCRIPT_DIR}/output_biasedmnist_${RHO_TAG}"
+DATA_PATH="${SCRIPT_DIR}/biasedmnist/data/biasedmnist_gan/biasedmnist_${RHO_TAG}"
+OUTDIR="${SCRIPT_DIR}/biasedmnist/output_biasedmnist_${RHO_TAG}"
 
 if [ ! -d "$DATA_PATH" ]; then
     echo "[ERROR] Data path not found: $DATA_PATH"
@@ -37,4 +37,5 @@ python "$TRAIN_SCRIPT_PATH" \
     --kimg=3500 \
     --mirror=1 \
     --aug=ada \
+    --dry-run \
     "$@"
