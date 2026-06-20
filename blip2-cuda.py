@@ -10,14 +10,14 @@ model_path = "Salesforce/blip2-flan-t5-xl"
 processor = Blip2Processor.from_pretrained(model_path)
 model = Blip2ForConditionalGeneration.from_pretrained(model_path)
 
-model = model.to("cpu")
-model = model.float()
+model = model.to("cuda")
+model = model.half()
 model.eval()
 
 
 def run_inference(image_path: str, prompt: str) -> str:
     image = Image.open(image_path).convert("RGB")
-    inputs = processor(images=image, text=prompt, return_tensors="pt").to("cpu")
+    inputs = processor(images=image, text=prompt, return_tensors="pt").to("cuda", torch.float16)
 
     with torch.inference_mode():
         output_ids = model.generate(
@@ -61,7 +61,7 @@ prompt = "Is the background predominantly water? Answer with one word: yes or no
 # Land: 73
 
 
-image_dir = "stylegan3/generated_10k/waterbirds_trunc1_class0"
+image_dir = "stylegan3/generated_10k_rho70/waterbirds_trunc1_class0"
 results = {}
 
 filenames = sorted(
