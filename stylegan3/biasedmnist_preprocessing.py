@@ -94,7 +94,7 @@ def run_gan(dataset_tool_path, img_dir, out_dir):
         dataset_tool_path,
         f"--source={img_dir}",
         f"--dest={out_dir}",
-        "--resolution=256x256"
+        "--resolution=32x32"
     ]
     subprocess.run(cmd, check=True)
 
