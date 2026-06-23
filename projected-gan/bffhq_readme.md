@@ -34,15 +34,13 @@ Each generated dataset is ready for StyleGAN2 training.
 
 Training is executed one $\rho$ value at a time using the provided shell wrapper. Each run trains a StyleGAN2 model on a single BFFHQ dataset.
 
+**Note:** just run the model for $\rho$=0.995
+
 ```bash
 bash bffhq_train.sh <rho_tag>
 ```
 
 For example:
-
-```bash
-bash bffhq_train.sh 95
-```
 
 ```bash
 bash bffhq_train.sh 99
@@ -57,7 +55,7 @@ Additional command-line arguments are forwarded directly to `train.py`, allowing
 For example:
 
 ```bash
-bash bffhq_train.sh 95 --gpus=2 --batch=64 --kimg=5000
+bash bffhq_train.sh 99 --gpus=2 --batch=64 --kimg=5000
 ```
 
 ## Dataset Requirements
@@ -71,7 +69,7 @@ bffhq/data/bffhq_rho_gan/bffhq_{rho_tag}
 For example:
 
 ```text
-bffhq/data/bffhq_rho_gan/bffhq_95
+bffhq/data/bffhq_rho_gan/bffhq_99
 ```
 
 If the dataset directory does not exist, run preprocessing first:
@@ -98,7 +96,7 @@ Any additional arguments passed to the training script are forwarded directly to
 For example:
 
 ```bash
-bash bffhq_train.sh 95 --batch=64 --gpus=2 --gamma=8.2
+bash bffhq_train.sh 99 --batch=64 --gpus=2 --gamma=8.2
 ```
 
 This allows overriding any supported StyleGAN2 training parameter without editing `bffhq_train.sh`.
