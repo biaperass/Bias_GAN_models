@@ -19,7 +19,7 @@ import pandas as pd
 
 from biasedmnist.biased_mnist import get_dataloader  # your script
 
-RHO_VALUES = [0.70, 0.80, 0.95]
+RHO_VALUES = [0.90, ] #0.70, 0.80, 0.95]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_ROOT   = os.path.join(SCRIPT_DIR, "biasedmnist/data")
@@ -38,10 +38,13 @@ def create_rho_csv(rho):
         batch_size=1,
         shuffle=False,
         rho=rho,
-        num_workers=0
+        num_workers=0,
+        class_size=1600
     )
 
     dataset = loader.dataset
+
+    print("DATASET LENGTH:", len(dataset))
 
     img_dir = os.path.join(OUT_IMAGES, f"rho_{rho:.2f}")
     os.makedirs(img_dir, exist_ok=True)
