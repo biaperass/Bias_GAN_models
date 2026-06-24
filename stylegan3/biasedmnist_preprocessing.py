@@ -19,7 +19,7 @@ import pandas as pd
 
 from biasedmnist.biased_mnist import get_dataloader  # your script
 
-RHO_VALUES = [0.70, 0.80, 0.95]
+RHO_VALUES = [0.90, ]#0.70, 0.80, 0.95]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_ROOT   = os.path.join(SCRIPT_DIR, "biasedmnist/data")

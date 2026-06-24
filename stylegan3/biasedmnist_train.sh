@@ -35,6 +35,5 @@ python "$TRAIN_SCRIPT_PATH" \
     --batch=32 \
     --cond=1 \
     --kimg=3500 \
-    --mirror=1 \
-    --aug=ada \
+    --aug=noaug \
     "$@"
