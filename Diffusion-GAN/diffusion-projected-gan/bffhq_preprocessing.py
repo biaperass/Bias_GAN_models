@@ -40,7 +40,7 @@ OUT_IMAGES = os.path.join(SCRIPT_DIR, "bffhq/data/bffhq_rho_images")
 OUT_META   = os.path.join(SCRIPT_DIR, "bffhq/data/bffhq_rho_csv")
 OUT_GAN    = os.path.join(SCRIPT_DIR, "bffhq/data/bffhq_rho_gan")
 
-RESOLUTION = "256x256"   # BFFHQ is face imagery at 256×256
+RESOLUTION = "64x64"   # BFFHQ is face imagery at 64×64
 
 
 def create_rho_csv(

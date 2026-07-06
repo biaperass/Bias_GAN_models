@@ -25,13 +25,19 @@ import pandas as pd
 RHO_VALUES = [0.70, 0.80, 0.95]
 
 # ── Paths (all relative to this script's directory) ──────────────────────────
-SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
-DATA_ROOT    = os.path.join(SCRIPT_DIR, "data")
-CSV_DIR      = os.path.join(DATA_ROOT, "waterbirds_rho_csv")
-IMAGES_DIR   = os.path.join(DATA_ROOT, "waterbirds_rho_images")
-GAN_DIR      = os.path.join(DATA_ROOT, "waterbirds_rho_gan")
-IMAGE_ROOT   = os.path.join(DATA_ROOT, "waterbirds", "waterbird_complete95_forest2water2")
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+WB_DIR = os.path.join(SCRIPT_DIR, "waterbirds")
+DATA_ROOT = os.path.join(WB_DIR, "data")
+
+CSV_DIR = os.path.join(DATA_ROOT, "waterbirds_rho_csv")
+IMAGES_DIR = os.path.join(DATA_ROOT, "waterbirds_rho_images")
+GAN_DIR = os.path.join(DATA_ROOT, "waterbirds_rho_gan")
+IMAGE_ROOT = os.path.join(
+    DATA_ROOT,
+    "waterbirds",
+    "waterbird_complete95_forest2water2"
+)
 
 def load_module(name, rel_path):
     """Load a sibling script as a module without installing it."""
@@ -170,13 +176,13 @@ def step4_run_dataset_tool(dataset_tool_path):
     for rho in RHO_VALUES:
         rho_tag = f"{int(rho * 100)}"
         src     = os.path.join(IMAGES_DIR, f"waterbirds_{rho_tag}")
-        dest    = os.path.join(GAN_DIR,    f"waterbirds_256_{rho_tag}")
+        dest    = os.path.join(GAN_DIR,    f"waterbirds_64_{rho_tag}")
         cmd = [
             sys.executable, dataset_tool_path,
             f"--source={src}",
             f"--dest={dest}",
-            "--width=256",
-            "--height=256"
+            "--width=64",
+            "--height=64"
         ]
         print(f"  {' '.join(cmd)}")
         subprocess.run(cmd, check=True)
