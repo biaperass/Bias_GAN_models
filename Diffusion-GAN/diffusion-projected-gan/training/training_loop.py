@@ -427,6 +427,11 @@ def training_loop(
 
             with open(snapshot_pkl, 'wb') as f:
                 pickle.dump(snapshot_data, f)
+                
+            # NEW: permanent, versioned snapshot (doesn't get overwritten next tick)
+            versioned_pkl = os.path.join(run_dir, f'network-snapshot-{cur_nimg//1000:06d}.pkl')
+            with open(versioned_pkl, 'wb') as f:
+                pickle.dump(snapshot_data, f)
 
         # Evaluate metrics.
         # if (snapshot_data is not None) and (len(metrics) > 0):
