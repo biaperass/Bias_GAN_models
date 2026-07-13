@@ -13,12 +13,12 @@ shift
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TRAIN_SCRIPT_PATH="${SCRIPT_DIR}/train.py"
-DATA_PATH="${SCRIPT_DIR}/biasedmnist/data/biasedmnist_gan/biasedmnist_${RHO_TAG}"
-OUTDIR="${SCRIPT_DIR}/biasedmnist/output_biasedmnist_${RHO_TAG}"
+DATA_PATH="${SCRIPT_DIR}/bffhq/data/bffhq_rho_gan/bffhq_${RHO_TAG}"
+OUTDIR="/data06/Users/bianca/diffusion-s_output_bffhq_${RHO_TAG}"
 
 if [ ! -d "$DATA_PATH" ]; then
     echo "[ERROR] Data path not found: $DATA_PATH"
-    echo "Run preprocess_biasedmnist.py first."
+    echo "Run bffhq_prep.py first."
     exit 1
 fi
 
@@ -31,10 +31,9 @@ python "$TRAIN_SCRIPT_PATH" \
     --cfg=stylegan2 \
     --data="$DATA_PATH" \
     --gpus=1 \
-    --gamma=8 \
     --batch=32 \
     --cond=1 \
     --kimg=3500 \
-    --mirror=0 \
-    --aug=ada \
+    --mirror=1 \
+    --dry-run \
     "$@"
