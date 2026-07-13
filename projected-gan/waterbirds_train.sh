@@ -35,4 +35,5 @@ python "$TRAIN_SCRIPT_PATH" \
     --cond=1 \
     --kimg=3500 \
     --mirror=1 \
+    --seed=1 \
     "$@"
