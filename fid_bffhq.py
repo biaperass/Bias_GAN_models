@@ -13,15 +13,6 @@ from pytorch_fid.fid_score import ImagePathDataset
 from pytorch_fid.inception import InceptionV3
 
 # ----------------------------- CONFIG -----------------------------
-# Real BFFHQ images are NOT behind a metadata CSV -- aligned/conflicting
-# and y are already encoded by directory structure for the train split:
-#   <REAL_ROOT>/<pct_dir>/align/<y>/*.png     -> bias-aligned
-#   <REAL_ROOT>/<pct_dir>/conflict/<y>/*.png  -> bias-conflicting
-#
-# valid/ and test/ are FLAT (no align/conflict subdirs) and are NOT
-# per-rho -- they are the same fixed pool regardless of which pct_dir
-# you're evaluating. Condition + class are recovered from the filename
-# suffix: "..._{y}_{bias}.png". y == bias -> aligned, y != bias -> conflicting.
 REAL_ROOT = "data_bffhq/bffhq/bffhq"
 VALID_DIR = os.path.join(REAL_ROOT, "valid")
 TEST_DIR = os.path.join(REAL_ROOT, "test")
@@ -40,18 +31,7 @@ RHO_MAP = {
     "99": "0.99",
 }
 
-# Because valid/test are NOT rho-specific, pooling them into every rho's
-# conflicting reference means that pool is constant across rho tokens
-# while only the tiny train-conflict contribution actually varies with
-# rho. That can mask true rho-dependent differences in the conflicting
-# distribution. Keep this in mind when reading FID deltas across rho.
 AUGMENT_CONFLICTING_WITH_VALID_TEST = True
-
-# Off by default. Turning this on keeps aligned/conflicting symmetric
-# (same source mixture for both), which removes the split-source
-# confound in point 2, but also dilutes whatever signal currently
-# exists in the aligned condition. Decide deliberately, don't just flip
-# it because it "seems more consistent."
 AUGMENT_ALIGNED_WITH_VALID_TEST = False
 
 ap = argparse.ArgumentParser()
@@ -204,9 +184,6 @@ def load_generated_paths_by_condition(detection_csv_path, image_folder, class_id
     Single pass over one detection CSV, returns both conditions:
       aligned:     y == class_id and detected == y
       conflicting: y == class_id and detected != y
-
-    detected is the SigLIP2 bias-attribute call (0/1), directly
-    comparable to y for this dataset per your labeling convention.
     """
     aligned, conflicting = [], []
     y_class_mismatches = 0

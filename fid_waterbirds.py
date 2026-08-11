@@ -35,9 +35,7 @@ RHO_MAP = {
     "95": "0.95",
 }
 
-MIN_N_WARN = 200  # below this, FID is unstable -- flag it, don't silently report
-
-OUTPUT_CSV = "fid_diff-gan_results_aligned_vs_conflicting_seed_2.csv"
+MIN_N_WARN = 200 
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 DIMS = 2048
@@ -103,10 +101,6 @@ def load_generated_paths_by_condition(detection_csv_path, image_folder, class_id
       aligned:     y == class_id and detected == y
       conflicting: y == class_id and detected != y
 
-    NOTE: this assumes "detected" encodes the VLM's inferred bias attribute
-    (place-equivalent), mirroring y == place for real images -- same
-    assumption the original script already made for the aligned case.
-    Verify this before trusting the conflicting-side numbers.
     """
     aligned, conflicting = [], []
     y_class_mismatches = 0
@@ -210,6 +204,10 @@ def main():
     grouped = defaultdict(dict)  # (rho_token, trunc_val) -> {class_id: detection_csv_path}
     for detection_csv_path, rho_token, trunc_val, class_id in detection_files:
         grouped[(rho_token, trunc_val)][class_id] = detection_csv_path
+
+    output_dir = os.path.dirname(OUTPUT_CSV)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
 
     write_header = not os.path.exists(OUTPUT_CSV)
     with open(OUTPUT_CSV, "a", newline="") as out_f:
