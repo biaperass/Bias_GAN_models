@@ -4,6 +4,7 @@ import csv
 import glob
 import numpy as np
 import torch
+import argparse
 import torchvision.transforms as TF
 from scipy import linalg
 from torch.nn.functional import adaptive_avg_pool2d
@@ -20,6 +21,9 @@ args = ap.parse_args()
 GEN_ROOT = args.gen_root
 DETECTIONS_DIR = args.detections_dir
 OUTPUT_CSV = args.output_csv
+
+TRAIN_IMG_ROOT = "data_waterbirds/waterbirds/waterbird_complete95_forest2water2"
+TRAIN_CSV_DIR = "data_waterbirds/waterbirds_rho_csv"
 
 DETECTIONS_FILE_RE = re.compile(
     r"^detections_gen_waterbirds_rho(\d+)_trunc([0-9.]+)_class([01])\.csv$"
